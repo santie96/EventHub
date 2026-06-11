@@ -1,0 +1,88 @@
+@use "colors" as *;
+@use "fonts" as *;
+
+// BASE BOOTSTRAP
+// Qui modifichi le variabili Bootstrap, non le classi custom.
+
+// Colori principali: cambiano classi tipo btn-primary, text-primary, bg-primary.
+$primary: $brand-primary;
+$secondary: $brand-secondary;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: $brand-gray-100;
+$dark: $dark-bg;
+
+$body-bg: $body-bg-color;
+$body-color: $body-text-color;
+
+// Font globali.
+$font-family-sans-serif: $font-body;
+$font-family-base: $font-body;
+
+// Titoli h1-h6 e classi Bootstrap .h1, .h2, ...
+$headings-font-family: $font-heading;
+$headings-font-weight: $brand-font-weight-bold;
+$headings-line-height: 1.1;
+$headings-margin-bottom: 1rem;
+
+$h1-font-size: 4.5rem; // 72px
+$h2-font-size: 3rem; // 48px
+$h3-font-size: 2.25rem; // 36px
+$h4-font-size: 1.75rem; // 28px
+$h5-font-size: 1.375rem; // 22px
+$h6-font-size: 1rem;
+
+// Classi display Bootstrap: .display-1, .display-2, ...
+$display-font-family: $font-heading;
+$display-font-weight: $brand-font-weight-extrabold;
+$display-line-height: 1.05;
+$display-font-sizes: (
+    1: 5rem,
+    2: 4.5rem,
+    3: 4rem,
+    4: 3.5rem,
+    5: 3rem,
+    6: 2.5rem
+);
+
+// Bottoni Bootstrap: .btn, .btn-primary, .btn-secondary, ...
+$btn-font-family: $font-body;
+$btn-font-weight: $brand-font-weight-semibold;
+$btn-border-radius: .75rem;
+$btn-border-radius-sm: .5rem;
+$btn-border-radius-lg: 1rem;
+$btn-padding-y: .625rem;
+$btn-padding-x: 1rem;
+$btn-padding-y-lg: .75rem;
+$btn-padding-x-lg: 1.25rem;
+$btn-transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+
+// cards
+$card-bg: $dark-bg-soft;
+$card-color: $brand-white;
+$card-border-radius: 15px;
+$card-spacer-y: 5px;
+$card-spacer-x: 10px;
+
+// Mappa colori usata da Bootstrap per generare btn-, bg-, text-, border-.
+$theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
+    "light": $light,
+    "dark": $dark,
+    "soft-dark": $dark-bg-soft,
+    "mid-dark": $card-bg-dark-hover
+);
+
+// accordion 
+
+$accordion-icon-color: $brand-white;
+$accordion-icon-active-color: $brand-white;
+$accordion-border-radius: 15px;
+$accordion-inner-border-radius: 15px;

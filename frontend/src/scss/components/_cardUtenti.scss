@@ -1,0 +1,30 @@
+.img-proportion {
+  aspect-ratio: 4 / 4;
+  object-fit: cover;
+}
+
+.team-flip-card {
+  min-height: 100%;
+  perspective: 1000px;
+}
+
+.team-flip-card__inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+}
+
+.team-flip-card:hover .team-flip-card__inner {
+  transform: rotateY(180deg);
+}
+
+.team-flip-card__front,
+.team-flip-card__back {
+  backface-visibility: hidden;
+}
+
+.team-flip-card__back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+}

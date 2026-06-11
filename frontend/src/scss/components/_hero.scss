@@ -1,0 +1,97 @@
+.hero-section {
+    background-image: url('../assets/img/event-hero.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 760px;
+    position: relative;
+}
+
+.hero-section h1,
+.hero-section p,
+.hero-section .h3,
+.hero-section .small {
+    text-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.75),
+        0 0 18px rgba(0, 0, 0, 0.45);
+}
+
+.hero-logo {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    width: 150px;
+    max-width: 28vw;
+    height: auto;
+    filter:
+        drop-shadow(0 8px 18px rgba(0, 0, 0, 0.7))
+        drop-shadow(0 0 22px rgba(164, 38, 241, 0.22));
+}
+
+.hero-section form {
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.42),
+        0 0 28px rgba(164, 38, 241, 0.18) !important;
+}
+
+.hero-section .row .btn {
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.48),
+        0 0 18px rgba(164, 38, 241, 0.22);
+}
+
+.hero-section .row .btn i {
+    filter:
+        drop-shadow(0 3px 6px rgba(0, 0, 0, 0.7))
+        drop-shadow(0 0 8px rgba(255, 255, 255, 0.18));
+}
+
+.hero-search-submit {
+    background: linear-gradient(135deg, var(--bs-primary), var(--bs-secondary));
+    border-color: transparent;
+
+    &:hover,
+    &:focus {
+        background: linear-gradient(135deg, var(--bs-primary), var(--bs-secondary));
+        border-color: transparent;
+        box-shadow: none;
+    }
+}
+
+
+
+.hero-search-results {
+    z-index: 10;
+
+    .hero-search-result:last-child {
+        border-bottom: 0 !important;
+    }
+
+    .hero-search-result:hover,
+    .hero-search-result:focus {
+        background-color: #f8f9fa;
+    }
+
+    .hero-search-result-avatar {
+        width: 36px;
+        height: 36px;
+        object-fit: cover;
+        flex: 0 0 36px;
+    }
+}
+
+
+
+@media screen and (min-width: 576px) {
+    .custom-rounded-end {
+        border-radius: 0px 15px 15px 0px !important;
+    }
+
+    .custom-rounded-inner {
+        border-radius: 0 !important;
+    }
+
+    .custom-rounded-start {
+        border-radius: 15px 0px 0px 15px !important;
+    }
+}

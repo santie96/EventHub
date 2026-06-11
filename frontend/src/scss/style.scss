@@ -1,0 +1,22 @@
+@import "../../node_modules/bootstrap/scss/functions";
+@import "customs/bootstrap_variables";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+@import "customs/custom_bootstrap";
+@import "customs/animazioni";
+
+// Pagine
+@import "./pages/eventiPage";
+@import "./pages/dashboard";
+@import "./pages/dettaglioPage";
+
+// Componenti
+@import "./components/navbar";
+@import "./components/hero";
+@import "./components/slider";
+@import "./components/comeFunziona";
+@import "./components/cardFeedback";
+@import "./components/LoginForm";
+@import "./components/registerForm";
+@import "./components/cardUtenti";

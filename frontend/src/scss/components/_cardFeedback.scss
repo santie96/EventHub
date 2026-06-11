@@ -1,0 +1,17 @@
+.feedback-text {
+    line-height: 1.7;
+}
+
+.feedback-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+}
+
+.feedback-user small {
+    color: rgba(255, 255, 255, 0.6);
+}
+

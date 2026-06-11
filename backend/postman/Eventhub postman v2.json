@@ -1,0 +1,1189 @@
+{
+  "info": {
+    "_postman_id": "3aba2295-a45c-477d-891c-664964cae472",
+    "name": "EventHub Backend API",
+    "description": "Collection completa per testare il backend EventHub.\n\n**Ordine consigliato:**\n1. Login admin\n2. Login utente (partecipant)\n3. Login organizer\n4. Esegui le altre request\n\nI token vengono salvati automaticamente negli script.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET /health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "POST /registra",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/registra",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "registra"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nuovo\",\n  \"surname\": \"Utente\",\n  \"email\": \"{{newUserEmail}}\",\n  \"username\": \"{{newUsername}}\",\n  \"role\": \"partecipant\",\n  \"password_hash\": \"{{newUserPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);",
+                  "var d = pm.response.json(); if(d && d.dati && d.dati.id) pm.collectionVariables.set(\"deleteUserId\", String(d.dati && d.dati.id));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST /login (utente)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "login"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{userPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);",
+                  "var d=pm.response.json(); if(d && d.dati) pm.collectionVariables.set(\"token\", d.dati);",
+                  "pm.test(\"token salvato\", () => pm.expect(pm.collectionVariables.get(\"token\")).to.not.be.empty);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST /login (admin)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "login"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);",
+                  "var d=pm.response.json(); if(d && d.dati) pm.collectionVariables.set(\"adminToken\", d.dati);",
+                  "pm.test(\"adminToken salvato\", () => pm.expect(pm.collectionVariables.get(\"adminToken\")).to.not.be.empty);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST /login (organizer)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "login"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{organizerEmail}}\",\n  \"password\": \"{{organizerPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);",
+                  "var d=pm.response.json(); if(d && d.dati) pm.collectionVariables.set(\"organizerToken\", d.dati);",
+                  "pm.test(\"organizerToken salvato\", () => pm.expect(pm.collectionVariables.get(\"organizerToken\")).to.not.be.empty);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);",
+                  "pm.test(\"array utenti\", () => pm.expect(pm.response.json().dati).to.be.an(\"array\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/users/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "{{userId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PATCH /api/users/:id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "{{userId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Luca Aggiornato\",\n  \"surname\": \"Esposito\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PATCH /api/users/:id/img-profile",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{userId}}/img-profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "{{userId}}",
+                "img-profile"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "img_profile",
+                  "type": "file",
+                  "src": "",
+                  "description": "Seleziona file jpg/jpeg/png/webp (max 5 MB)"
+                }
+              ]
+            },
+            "description": "Carica immagine profilo. Seleziona il file nel campo img_profile."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PATCH /api/users/:id/promuovi",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{userId}}/promuovi",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "{{userId}}",
+                "promuovi"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"organizer\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE /api/users/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{deleteUserId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "{{deleteUserId}}"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "POST /api/events",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{organizerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Test Conference 2026\",\n  \"description\": \"Evento di test per sviluppatori.\",\n  \"date\": \"2026-11-20\",\n  \"location\": \"Milano\",\n  \"indirizzo\": \"Via Brera 11\",\n  \"price\": 0,\n  \"max_seats\": 50,\n  \"category\": \"Tecnologia\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);",
+                  "var d = pm.response.json(); if(d && d.dati && d.dati.id) pm.collectionVariables.set(\"eventId\", String(d.dati && d.dati.id));",
+                  "var d = pm.response.json(); if(d && d.dati && d.dati.id) pm.collectionVariables.set(\"deleteEventId\", String(d.dati && d.dati.id));",
+                  "pm.test(\"eventId salvato\", () => pm.expect(pm.collectionVariables.get(\"eventId\")).to.not.be.empty);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);",
+                  "pm.test(\"array eventi\", () => pm.expect(pm.response.json().dati).to.be.an(\"array\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/events/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);",
+                  "pm.test(\"ha total_seats\", () => pm.expect(pm.response.json().dati).to.have.property(\"total_seats\"));",
+                  "pm.test(\"ha seats_available\", () => pm.expect(pm.response.json().dati).to.have.property(\"seats_available\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/events/category/:category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/category/{{category}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "category",
+                "{{category}}"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/events/organizer/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/organizer/{{organizerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "organizer",
+                "{{organizerId}}"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PATCH /api/events/:id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Test Conference 2026 \\u2014 Updated\",\n  \"location\": \"Roma\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PATCH /api/events/:id/image",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventId}}/image",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}",
+                "image"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "",
+                  "description": "Seleziona file jpg/jpeg/png/webp (max 5 MB)"
+                }
+              ]
+            },
+            "description": "Carica immagine evento. Seleziona il file nel campo image."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE /api/events/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{deleteEventId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{deleteEventId}}"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Registrations",
+      "item": [
+        {
+          "name": "POST /api/registrations",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registrations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registrations"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_id\": \"{{eventId}}\",\n  \"seats\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);",
+                  "var d = pm.response.json(); if(d && d.dati && d.dati.id) pm.collectionVariables.set(\"registrationId\", String(d.dati && d.dati.id));",
+                  "var d = pm.response.json(); if(d && d.dati && d.dati.id) pm.collectionVariables.set(\"deleteRegistrationId\", String(d.dati && d.dati.id));",
+                  "pm.test(\"registrationId salvato\", () => pm.expect(pm.collectionVariables.get(\"registrationId\")).to.not.be.empty);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/registrations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registrations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registrations"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);",
+                  "pm.test(\"array registrazioni\", () => pm.expect(pm.response.json().dati).to.be.an(\"array\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/registrations/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registrations/{{registrationId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registrations",
+                "{{registrationId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/registrations/event/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registrations/event/{{eventId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registrations",
+                "event",
+                "{{eventId}}"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{adminToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/registrations/event/:id/public",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registrations/event/{{eventId}}/public",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registrations",
+                "event",
+                "{{eventId}}",
+                "public"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);",
+                  "pm.test(\"array pubblico\", () => pm.expect(pm.response.json().dati).to.be.an(\"array\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET /api/registrations/user/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registrations/user/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registrations",
+                "user",
+                "{{userId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE /api/registrations/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registrations/{{deleteRegistrationId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registrations",
+                "{{deleteRegistrationId}}"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"JSON valido\", () => pm.response.to.be.json);",
+                  "pm.test(\"successo: true\", () => pm.expect(pm.response.json().successo).to.be.true);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "description": "Token partecipant — salvato da POST /login (utente)"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "description": "Token admin — salvato da POST /login (admin)"
+    },
+    {
+      "key": "organizerToken",
+      "value": "",
+      "description": "Token organizer — salvato da POST /login (organizer)"
+    },
+    {
+      "key": "adminEmail",
+      "value": "admin@test.it"
+    },
+    {
+      "key": "adminPassword",
+      "value": "Admin123"
+    },
+    {
+      "key": "organizerEmail",
+      "value": "giulia.romano@example.com"
+    },
+    {
+      "key": "organizerPassword",
+      "value": "Giulia1"
+    },
+    {
+      "key": "userEmail",
+      "value": "luca.esposito@example.com"
+    },
+    {
+      "key": "userPassword",
+      "value": "Luca1"
+    },
+    {
+      "key": "newUserEmail",
+      "value": "nuovo.utente99@example.com"
+    },
+    {
+      "key": "newUsername",
+      "value": "nuovoutente99"
+    },
+    {
+      "key": "newUserPassword",
+      "value": "Nuovo123!"
+    },
+    {
+      "key": "userId",
+      "value": "9",
+      "description": "Luca Esposito (partecipant) — corrisponde a userEmail"
+    },
+    {
+      "key": "organizerId",
+      "value": "4",
+      "description": "Giulia Romano (organizer) — corrisponde a organizerEmail"
+    },
+    {
+      "key": "eventId",
+      "value": "1",
+      "description": "Aggiornato automaticamente da POST /api/events"
+    },
+    {
+      "key": "registrationId",
+      "value": "1",
+      "description": "Aggiornato automaticamente da POST /api/registrations"
+    },
+    {
+      "key": "deleteUserId",
+      "value": "",
+      "description": "Salvato automaticamente da POST /registra"
+    },
+    {
+      "key": "deleteEventId",
+      "value": "",
+      "description": "Salvato automaticamente da POST /api/events"
+    },
+    {
+      "key": "deleteRegistrationId",
+      "value": "",
+      "description": "Salvato automaticamente da POST /api/registrations"
+    },
+    {
+      "key": "category",
+      "value": "Musica",
+      "description": "Categorie disponibili: Musica, Sport, Tecnologia, Cultura e Spettacolo, Enogastronomia"
+    }
+  ]
+}

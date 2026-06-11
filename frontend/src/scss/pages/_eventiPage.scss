@@ -1,0 +1,119 @@
+.eventi-page {
+  #filter-data,
+  #filter-location {
+    color-scheme: dark;
+
+    &:focus {
+      border-color: var(--bs-light) !important;
+      box-shadow: none !important;
+      outline: 0;
+    }
+  }
+
+  #filter-data::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+
+  #filter-data::placeholder {
+    color: var(--bs-light);
+    opacity: 1;
+  }
+
+  #filter-location {
+    --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+
+    option {
+      background-color: var(--bs-dark);
+      color: var(--bs-light);
+    }
+  }
+
+  .event-filter-panel {
+    position: absolute;
+    top: calc(100% + 0.45rem);
+    left: 0;
+    z-index: 1050;
+    min-width: 100%;
+    padding: 0.5rem;
+    color: var(--bs-light);
+    background-color: #050817;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 0.75rem;
+  }
+
+  .event-filter-date-panel {
+    width: 18rem;
+  }
+
+  .event-filter-location-panel {
+    right: 0;
+    left: auto;
+    width: 100%;
+    min-width: 10rem;
+  }
+
+  .event-filter-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+  }
+
+  .event-filter-calendar__label,
+  .event-filter-calendar__day {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    border-radius: 0.55rem;
+  }
+
+  .event-filter-calendar__label {
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 700;
+  }
+
+  .event-filter-calendar__day {
+    color: var(--bs-light);
+    background-color: transparent;
+    border: 0;
+
+    &:hover,
+    &:focus {
+      color: #fff;
+      background-color: rgba(164, 38, 241, 0.18);
+      outline: 0;
+      box-shadow: none;
+    }
+
+    &.active {
+      color: #fff;
+      background-color: rgba(164, 38, 241, 0.35);
+    }
+  }
+
+  .event-filter-option {
+    width: 100%;
+    display: block;
+    padding: 0.5rem 0.85rem;
+    color: var(--bs-light);
+    text-align: left;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0.55rem;
+
+    &:hover,
+    &:focus {
+      color: #fff;
+      background-color: rgba(164, 38, 241, 0.18);
+      outline: 0;
+      box-shadow: none;
+    }
+
+    &.active {
+      color: #fff;
+      background-color: rgba(164, 38, 241, 0.35);
+    }
+  }
+}

@@ -1,0 +1,130 @@
+@use "colors" as *;
+@use "fonts" as *;
+
+// bottoni
+//https: //getbootstrap.com/docs/5.3/components/buttons/#sass-variables
+.btn-primary {
+  --bs-btn-hover-bg: #{$brand-primary-hover};
+  --bs-btn-hover-border-color: #{$brand-primary-hover};
+  --bs-btn-active-bg: #{$brand-primary-hover};
+  --bs-btn-active-border-color: #{$brand-primary-hover};
+  --bs-btn-color: #{$brand-white};
+  --bs-btn-hover-color: #{$brand-white};
+
+}
+
+.btn-secondary {
+  --bs-btn-hover-bg: #{$brand-secondary-hover};
+  --bs-btn-hover-border-color: #{$brand-secondary-hover};
+  --bs-btn-active-bg: #{$brand-secondary-hover};
+  --bs-btn-active-border-color: #{$brand-secondary-hover};
+  --bs-btn-color: #{$brand-white};
+  --bs-btn-hover-color: #{$brand-white};
+}
+
+
+
+
+
+// navabr
+// https: //getbootstrap.com/docs/5.3/components/navbar/#sass-variables
+.navbar {
+  --bs-navbar-padding-y: .75rem;
+  --bs-navbar-brand-font-size: 1.25rem;
+  --bs-navbar-brand-color: #{$brand-gray-900};
+  --bs-navbar-brand-hover-color: #{$brand-primary};
+  --bs-navbar-color: #{$brand-white};
+  --bs-navbar-hover-color: #{$brand-secondary};
+  --bs-navbar-active-color: #{$brand-secondary};
+  --bs-navbar-disabled-color: #{$brand-gray-600};
+
+  font-family: $font-body;
+}
+
+.navbar-brand {
+  font-family: $font-heading;
+  font-weight: $brand-font-weight-bold;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  border-radius: .75rem;
+  font-weight: $brand-font-weight-medium;
+  padding-inline: .75rem;
+  transition: color .2s ease, background-color .2s ease;
+
+  &.active,
+  &.show {
+    color: var(--bs-navbar-active-color);
+    font-weight: $brand-font-weight-semibold;
+  }
+}
+
+// accordion
+
+// https: //getbootstrap.com/docs/5.3/components/accordion/#sass-variables
+
+.accordion {
+  --bs-accordion-border-color: #{$brand-secondary};
+  --bs-accordion-border-radius: 1rem;
+  --bs-accordion-inner-border-radius: calc(1rem - 1px);
+  --bs-accordion-btn-padding-x: 1.25rem;
+  --bs-accordion-btn-padding-y: 1rem;
+  --bs-accordion-btn-color: #{$brand-white};
+  --bs-accordion-btn-bg: #{$brand-secondary};
+  --bs-accordion-active-color: #{$brand-white};
+  --bs-accordion-active-bg: #{$brand-secondary-hover};
+  --bs-accordion-btn-focus-border-color: #{$brand-primary};
+  --bs-accordion-btn-focus-box-shadow: 0 0 0 .25rem rgba(#{$brand-primary}, .18);
+  --bs-accordion-body-padding-x: 1.25rem;
+  --bs-accordion-body-padding-y: 1rem;
+}
+
+.accordion-button {
+  font-family: $font-heading;
+  font-weight: $brand-font-weight-semibold;
+
+  &:not(.collapsed) {
+    box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color);
+  }
+}
+
+.accordion-body {
+  background-color: $brand-secondary-hover;
+  color: $brand-gray-100;
+  font-family: $font-body;
+}
+
+// cards 
+// https: //getbootstrap.com/docs/5.3/components/card/#variables
+.card {
+  --bs-card-border-color: #{$brand-gray-200};
+  --bs-card-border-radius: 1rem;
+  --bs-card-inner-border-radius: calc(1rem - 1px);
+  --bs-card-bg: #{$brand-white};
+  --bs-card-color: #{$brand-gray-900};
+  --bs-card-cap-bg: #{$brand-gray-100};
+  --bs-card-cap-color: #{$brand-gray-900};
+  --bs-card-spacer-x: 1.25rem;
+  --bs-card-spacer-y: 1.25rem;
+  --bs-card-title-spacer-y: .75rem;
+}
+
+.card-header,
+.card-footer {
+  font-weight: $brand-font-weight-semibold;
+}
+
+.card-title {
+  font-family: $font-heading;
+  font-weight: $brand-font-weight-bold;
+}
+
+.card-subtitle,
+.card-text {
+  font-family: $font-body;
+}
