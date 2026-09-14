@@ -621,9 +621,3 @@ Il progetto è stato sviluppato con l'obiettivo di realizzare un'applicazione fu
 | **File Management** | Multer, image upload e static files                        |
 | **Architecture**    | Frontend / API / Backend / Database                        |
 | **Development**     | Git, GitHub, Postman, environment variables                |
-
----
-
-## 📄 License
-
-Questo progetto è distribuito sotto licenza **MIT**.
