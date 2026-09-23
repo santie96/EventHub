@@ -27,10 +27,10 @@ const usersPlaceholder = [
 ];
 
 const seedUsersPlaceholder = async () => {
-  if (process.env.NODE_ENV !== 'development') {
-    console.warn('Seeder utenti placeholder saltato: NODE_ENV non è "development".');
-    return;
-  }
+  // if (process.env.NODE_ENV !== 'development') {
+   // console.warn('Seeder utenti placeholder saltato: NODE_ENV non è "development".');
+  //  return;
+  // }
 
   const client = await pool.connect();
 
