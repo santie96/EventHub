@@ -33,10 +33,10 @@ const eventiPlaceholder = [
 ];
 
 const seedEventsPlaceholder = async () => {
-  if (process.env.NODE_ENV !== 'development') {
-    console.warn('Seeder eventi placeholder saltato: NODE_ENV non e "development".');
-    return;
-  }
+  // if (process.env.NODE_ENV !== 'development') {
+   // console.warn('Seeder eventi placeholder saltato: NODE_ENV non e "development".');
+    // return;
+  //}
 
   const client = await pool.connect();
 
